@@ -76,11 +76,11 @@ function wpctl.get_sinks_and_sources()
         elseif line == ' │  ' then
             in_sinks_section = false
             in_sources_section = false
-        elseif line == '' and in_audio_section then
+        elseif line == 'Video' and in_audio_section then
             break
-        elseif in_sinks_section then
+        elseif in_sinks_section and string.match(line, '^ │ ') then
             table.insert(sinks, parse_sink_or_source_line(line))
-        elseif in_sources_section then
+        elseif in_sources_section and string.match(line, '^ │ ') then
             table.insert(sources, parse_sink_or_source_line(line))
         end
     end
