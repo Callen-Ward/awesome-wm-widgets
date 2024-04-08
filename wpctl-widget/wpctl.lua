@@ -46,7 +46,7 @@ function wpctl.get_mute(device)
 end
 
 local function parse_sink_or_source_line(line)
-    local default, id, description = string.match(line, '^ │[ ]*(%*?)[ ]*(%d+)%. (.*) %[.*%]$')
+    local default, id, description = string.match(line, '^ │[ ]*(%*?)[ ]*(%d+)%. (.*)[ ]*%[.*%]$')
 
     -- default device is indicated by a * near the beginning of the line
     local is_default = default == '*'
