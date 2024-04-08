@@ -142,8 +142,10 @@ local function worker(user_args)
     local step = args.step or 5
     local device = args.device or '@DEFAULT_SINK@'
     local tooltip = args.tooltip or false
+    local min_volume = math.floor(args.min_volume or 0)
     local max_volume = args.max_volume
     if max_volume then max_volume = math.floor(max_volume) end
+
 
     if widget_types[widget_type] == nil then
         volume.widget = widget_types['icon_and_text'].get_widget(args.icon_and_text_args)
@@ -198,12 +200,12 @@ local function worker(user_args)
         if not s then s = step end
 
         -- wpctl allows setting negative values
-        if status.volume - s >= 0 then
+        if status.volume - s >= min_volume then
             status.volume = status.volume - s
             wpctl.volume_decrease(device, s or step)
         else
-            status.volume = 0
-            wpctl.volume_set(device, 0)
+            status.volume = min_volume
+            wpctl.volume_set(device, min_volume)
         end
 
         update_graphic(volume.widget)
