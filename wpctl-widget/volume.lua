@@ -142,6 +142,8 @@ local function worker(user_args)
     local step = args.step or 5
     local device = args.device or '@DEFAULT_SINK@'
     local tooltip = args.tooltip or false
+    local max_volume = args.max_volume
+    if max_volume then max_volume = math.floor(max_volume) end
 
     if widget_types[widget_type] == nil then
         volume.widget = widget_types['icon_and_text'].get_widget(args.icon_and_text_args)
@@ -180,9 +182,15 @@ local function worker(user_args)
     function volume:inc(s)
         if not s then s = step end
 
-        status.volume = status.volume + s
+        if max_volume == nil or status.volume + s <= max_volume then
+            status.volume = status.volume + s
+            wpctl.volume_increase(device, s or step)
+        else
+            -- force floating point representation for consistency when using icon_and_text widget
+            status.volume = max_volume
+            wpctl.volume_set(device, max_volume)
+        end
 
-        wpctl.volume_increase(device, s or step)
         update_graphic(volume.widget)
     end
 

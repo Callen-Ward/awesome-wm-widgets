@@ -43,6 +43,7 @@ It is possible to customize the widget by providing a table with all or some of 
 |---|---|---|
 | `mixer_cmd` | `nil` | command to run on middle click (e.g. a mixer program) |
 | `step` | 5 | How much the volume is raised or lowered at once (in %) |
+| `max_volume` | `nil` | The maximum value the volume can be raised to (in %) |
 | `widget_type`| `icon_and_text`| Widget type, one of `horizontal_bar`, `vertical_bar`, `icon`, `icon_and_text`, `arc` |
 | `device` | `@DEFAULT_SINK@` | Select the device name to control |
 | `tooltip` | false | Display volume level in a tooltip when the mouse cursor hovers the widget |
@@ -53,4 +54,5 @@ For more details on parameters depending on the chosen widget type, please refer
 
 * Default `mixer_cmd` parameter value is now nil (was `pavucontrol` in original and pactl widgets)
 * Customization parameters `toggle_cmd`, `card`, `device`, `mixctrl`, and `value_type` no longer exist as they are only needed by amixer and pacmd
+* `max_volume` parameter added
 * This widget switches between pipewire nodes rather than ports, which might make some devices unusable without manual configuration
