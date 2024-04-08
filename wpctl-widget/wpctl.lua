@@ -32,8 +32,10 @@ end
 
 function wpctl.get_volume(device)
     local stdout = popen_and_return('LC_ALL=C wpctl get-volume ' .. device)
+    local vol = tonumber(string.match(stdout, '%d*%.%d*'))
 
-    return math.floor(tonumber(string.match(stdout, '%d*%.%d*')) * 100)
+    if vol == nil then return 0 end
+    return math.floor(vol * 100)
 end
 
 function wpctl.get_mute(device)
