@@ -48,11 +48,6 @@ local function build_rows(devices, on_checkbox_click)
             widget = wibox.widget.checkbox
         }
 
-        checkbox:connect_signal('button::press', function()
-            wpctl.set_default(device.id)
-            on_checkbox_click()
-        end)
-
         local row = wibox.widget {
             {
                 {
