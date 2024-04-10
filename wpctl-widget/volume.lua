@@ -188,7 +188,6 @@ local function worker(user_args)
             status.volume = status.volume + s
             wpctl.volume_increase(device, s or step)
         else
-            -- force floating point representation for consistency when using icon_and_text widget
             status.volume = max_volume
             wpctl.volume_set(device, max_volume)
         end
